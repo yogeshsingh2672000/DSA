@@ -5,6 +5,7 @@ Array.prototype.mymap = function (callback) {
   if (callback && typeof callback !== "function")
     throw new TypeError(`${callback} is not a function`);
   const result = [];
+  // this is the array on which mymap is called
   for (let i = 0; i < this.length; i++) {
     result.push(callback(this[i], i, this));
   }
@@ -19,6 +20,7 @@ Array.prototype.myfilter = function (cb) {
   if (cb && typeof cb !== "function")
     throw new TypeError(`${cb} is not a function`);
   const result = [];
+  // this is the array on which myfilter is called
   for (let i = 0; i < this.length; i++) {
     if (cb(this[i], i, this)) {
       result.push(this[i]);
