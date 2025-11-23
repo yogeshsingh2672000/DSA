@@ -31,3 +31,32 @@ Array.prototype.myfilter = function (cb) {
 
 const filteredArr = arr.myfilter((num) => num % 2 === 0);
 console.log(filteredArr); // [2,4]
+
+// reduce polyfill
+// Question to interviewer: Should I implement reduce with initial value or without initial value?
+Array.prototype.myreduce = function (cb, initial) {
+  let accumulator = initial === undefined ? this[0] : initial;
+  const startIndex = initial === undefined ? 1 : 0;
+
+  for (let i = startIndex; i < this.length; i++) {
+    accumulator = cb(accumulator, this[i], i, this);
+  }
+  return accumulator;
+};
+
+const product = arr.myreduce((acc, num) => acc * num);
+console.log(product); // 120
+
+// polyfill for bind
+Function.prototype.mybind = function (context, ...args) {
+  const fn = this;
+  return function (...newArgs) {
+    return fn.apply(context, [...args, ...newArgs]);
+  };
+};
+const obj = { x: 10 };
+function printX(y) {
+  console.log(this.x + y);
+}
+const boundPrintX = printX.mybind(obj, 5);
+boundPrintX(); // 15
